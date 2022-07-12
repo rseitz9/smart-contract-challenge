@@ -35,6 +35,9 @@ Still to do:
    This can be done securely by providing the secret during deployment with github encrypted secrets
    https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
-Another less secure option is to store the private key in the environment variables. I have already setup a .env file with other environment configuration and added it to the .gitignore.
+   Another less secure option is to store the private key in the environment variables. I have already setup a .env file with other environment configuration and added it to the .gitignore.
+
+   Once the private key is provided to the service, it can be used by importing it into the web3js lib:
+   `web3.eth.accounts.privateKeyToAccount`
 
 2. Add additional tests. I have added tests for the complex logic in calculateReward and extractEvent, but I have not yet added tests for the contract classes and other smaller functions.
