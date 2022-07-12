@@ -8,7 +8,12 @@ the tokens were developed using the open zeppelin standard ethereum contracts. I
 
 in the /smart-contract project, I used truffle and ganache to develop the solution. Truffle made the smart-contract development project hassle free as webjs imports the default accounts from ganache.
 
-the contracts can be deployed through running `truffle migrate`
+the contracts can be deployed by running:
+
+```
+npm install
+truffle migrate
+```
 
 I have also included scripts to make some test transactions on the local development chain by running `truffle exec ./testScripts/testScript.js` and `truffle exec ./testScripts/testScript_triggerReward.js`
 
@@ -19,6 +24,8 @@ one downside of this project structure is that the vs code extension for solidit
 
 Extending the contracts:
 One future update to extend the contracts may be adding the ability to deposit additional types of tokens. In this case, we can use a map of tokens to tokenContractAddresses. We can allow the contract owner to add more tokens to this mapping.
+
+\*currently `truffle test` is quite slow due to the VaultContract tests. There could be room for improvement here
 
 /node-backend-token
 
@@ -38,6 +45,16 @@ WIN_CONTRACT_ADDRESS =
 ```
 
 RPC_URL should support web sockets so that the service can receive events from the rpc server.
+
+You can run the project with the following:
+
+```
+npm install
+npm run build
+npm run start
+```
+
+instead of build and start you can also run `npm run dev`
 
 Still to do:
 
