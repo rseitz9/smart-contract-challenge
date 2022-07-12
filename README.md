@@ -37,6 +37,8 @@ VAULT_CONTRACT_ADDRESS =
 WIN_CONTRACT_ADDRESS =
 ```
 
+RPC_URL should support web sockets so that the service can receive events from the rpc server.
+
 Still to do:
 
 1. allow importing accounts using private key:
