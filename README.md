@@ -26,7 +26,7 @@ contains a javascript service to listen to events from the VaultContract and new
 
 I abstracted the contract interactions in the service under `/src/contracts`. These classes only contain the logic necessary to interact with the smart-contracts. Logic for calculating rewards and mapping events from the Vault contract I extracted to separate functions. There could be an argument for adding `calculateRewards` to the `VaultContract`, but since the smart-contract has no knowledge of this function, I decided to separate it (similarly with the extractEvents function). This also made these functions easy to test.
 
-these vars need to be defined in the .env file (with relevant defaults where applicable):
+The following vars need to be defined in the .env file (with relevant defaults where applicable):
 
 ```
 PORT = 8000
