@@ -6,7 +6,7 @@ this is the repository containing solidity code for the smart contracts pertaini
 
 the tokens were developed using the open zeppelin standard ethereum contracts. Initially, I implemented ERC20 token standard myself, but using this standard made it much easier and likely more secure.
 
-in the /smart-contract project, I used truffle and ganache to develop the solution. Truffle made the smart-contract development project hassle free as webjs imports the default accounts from ganache.
+in the /smart-contract project, I used truffle and ganache to develop the solution. Truffle made the smart-contract development project hassle free as web3js imports the default accounts from ganache.
 
 the contracts can be deployed by running:
 
@@ -67,8 +67,14 @@ Still to do:
    Once the private key is provided to the service, it can be used by importing it into the web3js lib:
    `web3.eth.accounts.privateKeyToAccount`
 
-2. Add additional tests. I have added tests for the complex logic in calculateReward and extractEvent, but I have not yet added tests for the contract classes and other smaller functions.
+2. Add additional tests. I have added tests for the complex logic in calculateReward and extractEvent, but I have not yet added tests for the contract classes (simply calls the deployed contract) and other smaller functions.
 
 3. `truffle test` runs slowly for the Vault contract. Check if it's possible to reduce this
 
 4. Look into minimizing gas fees.
+
+5. replace numbers in javascript service with BN (big number lib)-- this was just to reduce the complexity while working on the initial logic
+
+6. refactor remaining javascript code in index.ts: `newBlockCallback` and `rewardWorkflow` can be moved to separate files or classes. Add error messages for missing env values. `AddressAccountMapping` is a substitute for a database at the moment.
+
+I will fix up the above in the next few days but I wanted to get a working prototype solution out
