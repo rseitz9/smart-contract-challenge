@@ -17,13 +17,6 @@ contract("Vault", (accounts) => {
     });
   });
 
-  // it("Should only allow mint to be called by the minter", async () => {
-  //   const FUDTokenInstance = await fud.deployed();
-  //   const aa = await Vault.deployed();
-  //   console.log(await fud.address);
-  //   console.log(await aa.fudtokenaddress());
-  // });
-
   it("Should allow depositing tokens", async () => {
     await FUDTokenInstance.approve(VaultInstance.address, 1000, {
       from: accounts[1],

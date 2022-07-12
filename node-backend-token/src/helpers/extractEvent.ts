@@ -3,7 +3,6 @@ import { mapEvent } from "./mappers";
 
 export const extractEvent = (AddressAccountMapping: Map<string, Account>) => {
   return (error: any, event: any) => {
-    console.log(event);
     if (error) {
       console.error(error);
       return;
