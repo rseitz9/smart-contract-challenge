@@ -28,12 +28,14 @@ I abstracted the contract interactions in the service under `/src/contracts`. Th
 
 these vars need to be defined in the .env file (with relevant defaults where applicable):
 
+```
 PORT = 8000
 RPC_URL = ws://127.0.0.1:7545
 REWARD_BLOCK_INTERVAL = 10
 MINTER_ADDRESS =
 VAULT_CONTRACT_ADDRESS =
 WIN_CONTRACT_ADDRESS =
+```
 
 Still to do:
 
