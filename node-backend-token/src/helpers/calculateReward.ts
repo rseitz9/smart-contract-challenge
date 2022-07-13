@@ -15,7 +15,6 @@ const calculateReward = (
   endBlock: number,
   account?: Account
 ): number => {
-  console.log(`calculating for ${account?.totalBalance}`);
   const blockInterval = endBlock - startBlock;
   if (!account) {
     return 0;
@@ -45,7 +44,6 @@ const calculateReward = (
   }
 
   //otherwise we have events in the last interval period
-  console.log(`at last calculation with blocks ${startBlock} to ${endBlock}`);
   let average = 0;
   let lastBlock = startBlock;
   let trailingBalance = 0;
@@ -54,9 +52,6 @@ const calculateReward = (
     let averageOverPeriod =
       (currentEvents[i].previousBalance * (currentBlock - lastBlock)) /
       blockInterval;
-    console.log(
-      `average over ${lastBlock} to ${currentBlock} is ${averageOverPeriod}`
-    );
     lastBlock = currentBlock;
     average += averageOverPeriod;
     trailingBalance = currentEvents[i].totalBalance;

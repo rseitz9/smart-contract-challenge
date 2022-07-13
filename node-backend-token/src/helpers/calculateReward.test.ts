@@ -204,11 +204,18 @@ describe("calculateReward", () => {
     let reward = calculateReward(0, 5, account);
     expect(reward).toEqual(0);
   });
-  it("should work on this case", () => {
+  it("should ignore previous blocks in the log", () => {
     let account: Account = {
       totalBalance: 200,
-      latestBlockNumber: 5,
+      latestBlockNumber: 450,
       events: [
+        {
+          block: 1,
+          totalBalance: 500000,
+          type: "Deposit",
+          change: 1,
+          previousBalance: 49999,
+        },
         {
           block: 440,
           totalBalance: 23750,
