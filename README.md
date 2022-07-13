@@ -42,6 +42,7 @@ REWARD_BLOCK_INTERVAL = 10
 MINTER_ADDRESS =
 VAULT_CONTRACT_ADDRESS =
 WIN_CONTRACT_ADDRESS =
+MINTER_PRIVATE_KEY =
 ```
 
 RPC_URL should support web sockets so that the service can receive events from the rpc server.
@@ -58,7 +59,7 @@ instead of build and start you can also run `npm run dev`
 
 Still to do:
 
-1. allow importing accounts using private key:
+1. <s>allow importing accounts using private key:</s>
    This can be done securely by providing the secret during deployment with github encrypted secrets
    https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
@@ -66,6 +67,8 @@ Still to do:
 
    Once the private key is provided to the service, it can be used by importing it into the web3js lib:
    `web3.eth.accounts.privateKeyToAccount`
+
+   ✅ added local private key support via environment config
 
 2. Add additional tests. I have added tests for the complex logic in calculateReward and extractEvent, but I have not yet added tests for the contract classes (simply calls the deployed contract) and other smaller functions.
 
