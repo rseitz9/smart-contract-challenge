@@ -1,12 +1,10 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import Web3 from "Web3";
-import { VaultABI } from "./abi/VaultABI";
 import { Account } from "./interfaces";
 import { calculateReward } from "./helpers/calculateReward";
 import { extractEvent } from "./helpers/extractEvent";
 import { WINContract } from "./contracts/winContracts";
-import { WINTokenABI } from "./abi/WINTokenABI";
 import { VaultContract } from "./contracts/vaultContract";
 import HDWalletProvider from "@truffle/hdwallet-provider";
 import { EthChainSubscriber } from "./contracts/ethChainSubscriber";
@@ -17,7 +15,6 @@ const VaultContractAddress = process.env.VAULT_CONTRACT_ADDRESS || "";
 const WINTokenContractAddress = process.env.WIN_CONTRACT_ADDRESS || "";
 const rpcUrlWs = process.env.RPC_URL_WS || "";
 const rpcUrlHttp = process.env.RPC_URL_HTTP || "";
-const MINTER_ADDRESS = process.env.MINTER_ADDRESS || "";
 const MINTER_PRIVATE_KEY = process.env.MINTER_PRIVATE_KEY || "";
 const RewardBlockInterval = parseInt(process.env.REWARD_BLOCK_INTERVAL || "10");
 
@@ -27,17 +24,11 @@ const web3Socket = new Web3(socketProvider);
 const localKeyProvider = new HDWalletProvider(MINTER_PRIVATE_KEY, rpcUrlHttp);
 const web3LocalWallet = new Web3(localKeyProvider);
 
-const vaultContract = new VaultContract(
-  web3Socket,
-  VaultABI,
-  VaultContractAddress
-);
+const vaultContract = new VaultContract(web3Socket, VaultContractAddress);
 
 const winContract = new WINContract(
   web3LocalWallet,
-  WINTokenABI,
   WINTokenContractAddress,
-  MINTER_ADDRESS,
   MINTER_PRIVATE_KEY
 );
 
@@ -63,7 +54,7 @@ const newBlockCallback = (error: any, result: any) => {
   }
   let blockNumber = result.number;
   if (blockNumber % RewardBlockInterval === 0) {
-    console.log(`paying out reward for ${blockNumber}`);
+    console.log(`paying out reward for block ${blockNumber}`);
     rewardWorkflow(blockNumber - RewardBlockInterval, blockNumber);
   }
 };

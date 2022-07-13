@@ -144,7 +144,7 @@ describe("calculateReward", () => {
   it("should calculate correctly in between events", () => {
     let account: Account = {
       totalBalance: 200,
-      latestBlockNumber: 5,
+      latestBlockNumber: 30,
       events: [
         {
           block: 10,
@@ -176,7 +176,7 @@ describe("calculateReward", () => {
   it("should calculate correctly with only future events", () => {
     let account: Account = {
       totalBalance: 200,
-      latestBlockNumber: 5,
+      latestBlockNumber: 30,
       events: [
         {
           block: 10,
@@ -204,7 +204,7 @@ describe("calculateReward", () => {
     let reward = calculateReward(0, 5, account);
     expect(reward).toEqual(0);
   });
-  it("should ignore previous blocks in the log", () => {
+  it("should ignore previous blocks in the log when calculating on current blocks", () => {
     let account: Account = {
       totalBalance: 200,
       latestBlockNumber: 450,

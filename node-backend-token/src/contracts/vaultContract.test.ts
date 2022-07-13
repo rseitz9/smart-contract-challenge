@@ -9,7 +9,7 @@ describe("vaultContract", () => {
       return mockContract as any;
     });
     const spy = jest.spyOn(mockContract.events, "allEvents");
-    const sut = new VaultContract(web3, "", "");
+    const sut = new VaultContract(web3, "");
     let callback = () => {};
     sut.subscribeToEvents(callback);
     expect(spy).toHaveBeenCalledWith({ fromBlock: 0 }, callback);

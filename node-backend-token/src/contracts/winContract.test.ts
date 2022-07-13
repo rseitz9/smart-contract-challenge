@@ -19,9 +19,10 @@ describe("winContract", () => {
       .mockImplementation(() => {
         return Promise.resolve() as any;
       });
-    let winContract = new WINContract(web3, "", "0x1", "0x2", "00");
+    let winContract = new WINContract(web3, "0x1", "00");
     await new Promise(process.nextTick); //wait for all promises to resolve
     expect(privateKeyToAccountSpy).toHaveBeenCalledWith("0x00");
     expect(walletSpy).toHaveBeenCalledWith(mock);
   });
+  //TODO: add test for mintTokens
 });

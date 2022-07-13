@@ -1,21 +1,19 @@
 import BN from "bn.js";
+import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
+import { WINTokenABI } from "../abi/WINTokenABI";
 
 export class WINContract {
-  private _web3: any;
+  private _web3: Web3;
   private _contract: Contract;
-  private _minterAddress: string;
-  constructor(
-    web3: any,
-    abi: any,
-    contractAddress: string,
-    minterAddress: string,
-    minterPrivateKey: string
-  ) {
+  private _minterAddress!: string;
+
+  constructor(web3: any, contractAddress: string, minterPrivateKey: string) {
     this._web3 = web3;
-    this._contract = new web3.eth.Contract(abi, contractAddress);
-    this._minterAddress = minterAddress;
-    this.importPrivateKey(minterPrivateKey);
+    this._contract = new web3.eth.Contract(WINTokenABI, contractAddress);
+    this.importPrivateKey(minterPrivateKey).then((address) => {
+      this._minterAddress = address;
+    });
   }
   mintTokens = async (address: string, amount: number) => {
     console.log(`minting ${amount} to ${address}`);
@@ -28,8 +26,9 @@ export class WINContract {
     }
   };
 
-  async importPrivateKey(key: string) {
+  async importPrivateKey(key: string): Promise<string> {
     let account = await this._web3.eth.accounts.privateKeyToAccount("0x" + key);
     await this._web3.eth.accounts.wallet.add(account);
+    return account.address;
   }
 }
