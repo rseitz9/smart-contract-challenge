@@ -6,14 +6,16 @@ Ideally we could store the events in a database to maintain
 consistency. I considered deleting the events based on 
 what had already been paid out, which would reduce the 
 complexity of having to calculate the reward in periods 
-where there is no event; however, it might be useful
-to keep a record of the events 
+where there is no event; 
+
+however, it might be useful to keep a record of the events off-chain.
 */
 const calculateReward = (
   startBlock: number,
   endBlock: number,
   account?: Account
 ): number => {
+  console.log(`calculating for ${account?.totalBalance}`);
   const blockInterval = endBlock - startBlock;
   if (!account) {
     return 0;
@@ -28,7 +30,7 @@ const calculateReward = (
   let currentEvents = account.events.filter((ev) => {
     return ev.block >= startBlock && ev.block <= endBlock;
   });
-
+  console.log(currentEvents);
   //if we are in between events
   //find last event before start block to give us our deposit over this time period
   if (currentEvents.length < 1) {
@@ -43,17 +45,21 @@ const calculateReward = (
   }
 
   //otherwise we have events in the last interval period
+  console.log(`at last calculation with blocks ${startBlock} to ${endBlock}`);
   let average = 0;
   let lastBlock = startBlock;
   let trailingBalance = 0;
   for (let i = 0; i < currentEvents.length; i++) {
-    let currentBlock = account.events[i].block;
+    let currentBlock = currentEvents[i].block;
     let averageOverPeriod =
-      (account.events[i].previousBalance * (currentBlock - lastBlock)) /
+      (currentEvents[i].previousBalance * (currentBlock - lastBlock)) /
       blockInterval;
+    console.log(
+      `average over ${lastBlock} to ${currentBlock} is ${averageOverPeriod}`
+    );
     lastBlock = currentBlock;
     average += averageOverPeriod;
-    trailingBalance = account.events[i].totalBalance;
+    trailingBalance = currentEvents[i].totalBalance;
   }
   if (lastBlock != endBlock) {
     average += (trailingBalance * (endBlock - lastBlock)) / blockInterval;

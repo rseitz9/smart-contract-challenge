@@ -77,4 +77,6 @@ Still to do:
 
 6. refactor remaining javascript code in index.ts: `newBlockCallback` and `rewardWorkflow` can be moved to separate files or classes. Add error messages for missing env values. `AddressAccountMapping` is a substitute for a database at the moment.
 
+7. There may be error cases if events are received out of order.
+
 I will fix up the above in the next few days but I wanted to get a working prototype solution out

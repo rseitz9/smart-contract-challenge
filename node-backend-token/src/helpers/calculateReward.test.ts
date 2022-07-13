@@ -204,4 +204,49 @@ describe("calculateReward", () => {
     let reward = calculateReward(0, 5, account);
     expect(reward).toEqual(0);
   });
+  it("should work on this case", () => {
+    let account: Account = {
+      totalBalance: 200,
+      latestBlockNumber: 5,
+      events: [
+        {
+          block: 440,
+          totalBalance: 23750,
+          type: "Deposit",
+          change: 1000,
+          previousBalance: 22750,
+        },
+        {
+          block: 442,
+          totalBalance: 23500,
+          type: "Withdraw",
+          change: -250,
+          previousBalance: 23750,
+        },
+        {
+          block: 444,
+          totalBalance: 23750,
+          type: "Deposit",
+          change: 250,
+          previousBalance: 23500,
+        },
+        {
+          block: 446,
+          totalBalance: 23500,
+          type: "Withdraw",
+          change: -250,
+          previousBalance: 23750,
+        },
+        {
+          block: 447,
+          totalBalance: 24500,
+          type: "Deposit",
+          change: 1000,
+          previousBalance: 23500,
+        },
+      ],
+    };
+    let reward = calculateReward(440, 450, account);
+    expect(reward).toEqual(1195);
+  });
 });

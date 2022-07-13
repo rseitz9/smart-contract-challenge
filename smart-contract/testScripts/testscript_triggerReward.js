@@ -10,7 +10,7 @@ module.exports = async function (callback) {
     const VaultContract = await Vault.deployed();
     const FudTokenMinter = accounts[0];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 7; i++) {
       await FudContract.transfer(accounts[4], 1, {
         from: FudTokenMinter,
       });
