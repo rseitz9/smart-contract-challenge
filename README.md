@@ -37,7 +37,8 @@ The following vars need to be defined in the .env file (with relevant defaults w
 
 ```
 PORT = 8000
-RPC_URL = ws://127.0.0.1:7545
+RPC_URL_WS = ws://127.0.0.1:7545
+RPC_URL_HTTP = http://127.0.0.1:7545
 REWARD_BLOCK_INTERVAL = 10
 MINTER_ADDRESS =
 VAULT_CONTRACT_ADDRESS =

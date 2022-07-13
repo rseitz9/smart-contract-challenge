@@ -25,9 +25,7 @@ const socketProvider = new Web3.providers.WebsocketProvider(rpcUrlWs);
 const web3Socket = new Web3(socketProvider);
 
 const localKeyProvider = new HDWalletProvider(MINTER_PRIVATE_KEY, rpcUrlHttp);
-
 const web3LocalWallet = new Web3(localKeyProvider);
-// web3Wallet.eth.getAccounts().then(console.log);
 
 const vaultContract = new VaultContract(
   web3Socket,

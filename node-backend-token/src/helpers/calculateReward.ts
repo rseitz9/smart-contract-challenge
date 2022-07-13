@@ -29,7 +29,6 @@ const calculateReward = (
   let currentEvents = account.events.filter((ev) => {
     return ev.block >= startBlock && ev.block <= endBlock;
   });
-  console.log(currentEvents);
   //if we are in between events
   //find last event before start block to give us our deposit over this time period
   if (currentEvents.length < 1) {
