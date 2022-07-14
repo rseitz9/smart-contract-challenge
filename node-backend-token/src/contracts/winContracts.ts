@@ -15,6 +15,7 @@ export class WINContract {
       this._minterAddress = address;
     });
   }
+  //TODO: debug nonce error here
   mintTokens = async (address: string, amount: number) => {
     console.log(`minting ${amount} to ${address}`);
     try {
