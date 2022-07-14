@@ -18,11 +18,15 @@ export class WINContract {
   mintTokens = async (address: string, amount: number) => {
     console.log(`minting ${amount} to ${address}`);
     try {
+      let gasEstimate = await this._contract.methods
+        .mint(address, new BN(amount))
+        .estimateGas({ from: this._minterAddress });
+      //Could do something here to save the transaction for processing later if gas is too
       await this._contract.methods
         .mint(address, new BN(amount))
-        .send({ from: this._minterAddress, gasLimit: 200000 });
+        .send({ from: this._minterAddress, gasLimit: gasEstimate + 50000 });
     } catch (e) {
-      console.error(e);
+      console.error("ERROR:", e);
     }
   };
 
