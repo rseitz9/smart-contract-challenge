@@ -15,6 +15,9 @@ export class WINContract {
       this._minterAddress = address;
     });
   }
+  //TODO: can use estimateGas here. We can also implement
+  //a queue to store transactions when gas prices are high
+  //that will be executed later.
   mintTokens = async (address: string, amount: number) => {
     console.log(`minting ${amount} to ${address}`);
     try {

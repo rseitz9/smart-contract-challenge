@@ -74,7 +74,9 @@ Still to do:
 
 3. `truffle test` runs slowly for the Vault contract. Check if it's possible to reduce this
 
-4. Look into minimizing gas fees.
+4. Look into minimizing gas fees:
+
+   - winContract class in backend service can be improved
 
 5. replace numbers in javascript service with BN (big number lib)-- this was just to reduce the complexity while working on the initial logic
 
