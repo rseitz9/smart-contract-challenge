@@ -15,13 +15,13 @@ contract("FUDToken", (accounts) => {
   it("Should send 1.5 million tokens to the creator", async () => {
     const FUDTokenInstance = await FUDToken.deployed();
     const balance = await FUDTokenInstance.balanceOf(accounts[0]);
-    assert.equal(balance.valueOf(), 1500000);
+    expect(balance).to.deep.equal(web3.utils.toBN(1500000));
   });
 
   it("Should set total supply to 1.5 million", async () => {
     const FUDTokenInstance = await FUDToken.deployed();
     const totalSupply = await FUDTokenInstance.totalSupply();
-    assert.equal(totalSupply.valueOf(), 1500000);
+    expect(totalSupply).to.deep.equal(web3.utils.toBN(1500000));
   });
 
   it("Should transfer 500 to the second account", async () => {
@@ -32,9 +32,9 @@ contract("FUDToken", (accounts) => {
     const balanceMinter = await FUDTokenInstance.balanceOf(accounts[0]);
     const balanceAcct = await FUDTokenInstance.balanceOf(accounts[1]);
 
-    assert.equal(transferResult.receipt.status, true);
-    assert.equal(balanceMinter.valueOf(), 1499500);
-    assert.equal(balanceAcct.valueOf(), 500);
+    expect(transferResult.receipt.status).to.be.true;
+    expect(balanceMinter).to.deep.equal(web3.utils.toBN(1499500));
+    expect(balanceAcct).to.deep.equal(web3.utils.toBN(500));
   });
 
   it("Should emit a Transfer event when transferring tokens", async () => {
