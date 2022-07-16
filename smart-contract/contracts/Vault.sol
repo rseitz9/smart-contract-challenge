@@ -4,52 +4,48 @@ pragma solidity 0.8.15;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-interface AirVault {
+interface AirVaultInterface {
 	// lock tokens in the AirVault contract
-	function deposit(uint256 amount) external returns(bool);
+	function deposit(string calldata symbol,uint256 amount) external returns(bool);
 
 	// withdraw deposited tokens
-	function withdraw(uint256 amount) external returns(bool);
+	function withdraw(string calldata symbol,uint256 amount) external returns(bool);
 	
 	// provides how many tokens a specific address has deposited
-	function lockedBalanceOf(address account) external view returns(uint256);
-    
-    event Deposit(address indexed from, uint256 amount, uint256 totalLocked);
-    event Withdraw(address indexed to, uint256 amount, uint256 totalLocked);
+	function lockedBalanceOf(string calldata symbol,address account) external view returns(uint256);
+
+    event Deposit(address indexed from, string symbol, uint256 amount, uint256 totalLocked);
+    event Withdraw(address indexed to, string symbol, uint256 amount, uint256 totalLocked);
 }
 
-contract Vault is AirVault{
-    address owner;
-    address FUDTokenAddress;
-    mapping(address => uint256) public accountBalances;
+contract AirVault is AirVaultInterface, Ownable{
+    mapping(string=>address) allowedTokens;
+    mapping(string=>mapping(address => uint256)) public tokenToAccountBalances;
 
-    constructor(address fudTokenAddress){
-        owner = msg.sender;
-        FUDTokenAddress = fudTokenAddress;
+    function allowToken(string calldata symbol, address tokenContractAddress) public{
+        require(msg.sender==owner(),"Access Denied");
+        allowedTokens[symbol]=tokenContractAddress;
     }
 
-	function deposit(uint256 amount) public override returns(bool){
-        //needs to be atomic
-        accountBalances[msg.sender]+=amount;
-        ERC20(FUDTokenAddress).transferFrom(msg.sender, address(this), amount);
-        emit Deposit(msg.sender, amount, accountBalances[msg.sender]);
+	function deposit(string calldata symbol, uint256 amount) public override returns(bool){
+        require(allowedTokens[symbol]!=address(0),"Token Not Allowed");
+        tokenToAccountBalances[symbol][msg.sender]+=amount;
+        ERC20(allowedTokens[symbol]).transferFrom(msg.sender, address(this), amount);
+        emit Deposit(msg.sender, symbol, amount, tokenToAccountBalances[symbol][msg.sender]);
         return true;
     }
 
-	function withdraw(uint256 amount) public override returns(bool){
-        require(accountBalances[msg.sender]>=amount, "Insufficient funds");
-        accountBalances[msg.sender]-=amount;
-        ERC20(FUDTokenAddress).transfer(msg.sender, amount);
-        emit Withdraw(msg.sender, amount, accountBalances[msg.sender]);
+	function withdraw(string calldata symbol, uint256 amount) public override returns(bool){
+        require(tokenToAccountBalances[symbol][msg.sender]>=amount, "Insufficient Funds");
+        tokenToAccountBalances[symbol][msg.sender]-=amount;
+        ERC20(allowedTokens[symbol]).transfer(msg.sender, amount);
+        emit Withdraw(msg.sender, symbol, amount, tokenToAccountBalances[symbol][msg.sender]);
         return true;
     }
 
-    function lockedBalanceOf(address account) public override view returns(uint256){
-        return accountBalances[account];
-    }
-
-    function fudtokenaddress() public view returns(address){
-        return FUDTokenAddress;
+    function lockedBalanceOf(string calldata symbol, address account) public override view returns(uint256){
+        return tokenToAccountBalances[symbol][account];
     }
 }

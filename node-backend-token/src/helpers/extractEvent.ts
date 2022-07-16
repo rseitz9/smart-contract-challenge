@@ -9,6 +9,9 @@ export const extractEvent = (AddressAccountMapping: Map<string, Account>) => {
     }
 
     let { address, block, totalBalance, amount, type } = mapEvent(event);
+    if (type !== "Withdraw" && type !== "Deposit") {
+      return;
+    }
 
     if (type === "Withdraw") {
       amount = -amount;

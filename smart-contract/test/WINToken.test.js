@@ -15,8 +15,9 @@ contract("WINToken", (accounts) => {
     } catch (e) {
       error = e;
     }
-    assert(error);
-    assert(error.message.includes("must have minter role to mint"));
+
+    expect(error).to.exist;
+    expect(error.message).to.include("must have minter role to mint");
   });
 
   it("should mint tokens directly to account", async () => {
@@ -25,7 +26,7 @@ contract("WINToken", (accounts) => {
     });
 
     const balanceAcct = await WINTokenInstance.balanceOf(accounts[1]);
-    assert.equal(balanceAcct.valueOf(), 199);
+    expect(balanceAcct).to.deep.equal(web3.utils.toBN(199));
   });
 
   it("Should emit a Transfer event when minting tokens", async () => {

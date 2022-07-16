@@ -1,16 +1,5 @@
 export const VaultABI: any = [
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "fudTokenAddress",
-        type: "address",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -18,6 +7,12 @@ export const VaultABI: any = [
         internalType: "address",
         name: "from",
         type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "symbol",
+        type: "string",
       },
       {
         indexed: false,
@@ -41,8 +36,33 @@ export const VaultABI: any = [
       {
         indexed: true,
         internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
         name: "to",
         type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "symbol",
+        type: "string",
       },
       {
         indexed: false,
@@ -61,14 +81,40 @@ export const VaultABI: any = [
     type: "event",
   },
   {
-    inputs: [
+    inputs: [],
+    name: "owner",
+    outputs: [
       {
         internalType: "address",
         name: "",
         type: "address",
       },
     ],
-    name: "accountBalances",
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "tokenToAccountBalances",
     outputs: [
       {
         internalType: "uint256",
@@ -82,6 +128,42 @@ export const VaultABI: any = [
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "symbol",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "tokenContractAddress",
+        type: "address",
+      },
+    ],
+    name: "allowToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "symbol",
+        type: "string",
+      },
       {
         internalType: "uint256",
         name: "amount",
@@ -102,6 +184,11 @@ export const VaultABI: any = [
   {
     inputs: [
       {
+        internalType: "string",
+        name: "symbol",
+        type: "string",
+      },
+      {
         internalType: "uint256",
         name: "amount",
         type: "uint256",
@@ -121,6 +208,11 @@ export const VaultABI: any = [
   {
     inputs: [
       {
+        internalType: "string",
+        name: "symbol",
+        type: "string",
+      },
+      {
         internalType: "address",
         name: "account",
         type: "address",
@@ -132,20 +224,6 @@ export const VaultABI: any = [
         internalType: "uint256",
         name: "",
         type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: "fudtokenaddress",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
       },
     ],
     stateMutability: "view",
