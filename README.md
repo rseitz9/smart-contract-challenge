@@ -45,7 +45,7 @@ WIN_CONTRACT_ADDRESS =
 MINTER_PRIVATE_KEY =
 ```
 
-RPC_URL should support web sockets so that the service can receive events from the rpc server.
+RPC_URL_WS should support web sockets so that the service can receive events from the rpc server.
 
 You can run the project with the following:
 
